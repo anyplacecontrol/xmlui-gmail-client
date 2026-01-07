@@ -1,21 +1,14 @@
 <Component name="MessageContent">
     <AppState id="selectedMessage" bucket="appState" />
 
-    <!-- Card with message details -->
-    <Card
-        width="97%"
-        marginLeft="10px"
-        height="100%"
-        when="{ selectedMessage.value  }"
-    >
-        <VStack gap="$space-3" padding="$space-4" height="100%">
+        <VStack height="100%" overflowY="auto">
             <!-- Header -->
-            <VStack gap="$space-2">
+            <VStack >
                 <Text variant="strong" fontSize="x-large">
                     { selectedMessage.value.subject || '(No Subject)' }
                 </Text>
 
-                <VStack gap="$space-1">
+                <VStack>
 
                     <Text fontSize="smaller" color="$textColor--disabled">
                         { formatDate(selectedMessage.value.date, "MMMM dd, yyyy 'at' HH:mm") }
@@ -39,16 +32,14 @@
             />
 
             <!-- Message body -->
-            <VStack gap="$space-2" flex="1" overflowY="auto">
+            <VStack overflowY="auto">
                 <Text>
                     { selectedMessage.value.snippet }
                 </Text>
             </VStack>
 
             <!-- Action buttons -->
-            <HStack
-                gap="$space-2"
-                marginTop="$space-3"
+            <HStack               
                 horizontalAlignment="end"
             >
                 <Button
@@ -57,17 +48,6 @@
                 />
             </HStack>
         </VStack>
-    </Card>
-
-    <!-- Placeholder when no message is selected -->
-
-    <VStack height="97%" when="{ !selectedMessage.value  }">
-        <Text
-            color="$textColor--disabled"
-            margin="auto"
-        >
-            Select a message to view details
-        </Text>
-    </VStack>
+ 
 
 </Component>

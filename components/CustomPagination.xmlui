@@ -1,0 +1,65 @@
+<Component name="CustomPagination">
+  <AppState id="pagination" bucket="messagePagination" />
+
+  <script>
+    function handlePrevPage() {
+      const currentState = pagination.value;
+      const newPage = currentState.currentPage - 1;
+      
+      if (newPage === 0) {
+        pagination.update({
+          ...currentState,
+          currentPage: 0,
+          currentPageToken: '',
+          prevPageToken: ''
+        });
+      } else {
+        pagination.update({
+          ...currentState,
+          currentPage: newPage,
+          currentPageToken: currentState.prevPageToken,
+          prevPageToken: ''
+        });
+      }
+    }
+
+    function handleNextPage() {
+      const currentState = pagination.value;
+      
+      if (!currentState.nextPageToken) return;
+      
+      pagination.update({
+        ...currentState,
+        currentPage: currentState.currentPage + 1,
+        prevPageToken: currentState.currentPageToken,
+        currentPageToken: currentState.nextPageToken
+      });
+    }
+  </script>
+
+  <HStack gap="space-2" horizontalAlignment="center">
+    <Button
+      label="◀"
+      variant="ghost"
+      size="xs"
+      enabled="{ pagination.value.currentPage > 0 }"
+      onClick="{ handlePrevPage() }"
+    />
+    
+    <Text
+      fontSize="fontSize-base"
+      fontWeight="fontWeight-medium"
+      padding="space-2"
+    >
+      Page { pagination.value.currentPage + 1 }
+    </Text>
+    
+    <Button
+      label="▶"
+      variant="ghost"
+      size="xs"
+      enabled="{ pagination.value.nextPageToken !== '' }"
+      onClick="{ handleNextPage() }"
+    />
+  </HStack>
+</Component>

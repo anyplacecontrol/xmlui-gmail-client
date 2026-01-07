@@ -3,32 +3,59 @@
   var.auth="{ $props.auth } "
   var.messagesList="{ $props.messagesList }"
 >
+  <AppState id="selectedMessage" bucket="appState" />
+
   <!-- Desktop view -->
   <HSplitter
-    height="100%"
+    height="83vh"
     minPrimarySize="320px"
     initialPrimarySize="35%"
     when="{ mediaSize.sizeIndex > 1 }"
   >
-    <VStack    
-      height="83vh"
-    >
+    <VStack>
       <MessagesList
         auth="{ auth }"
         messagesList="{ messagesList }"
       />
     </VStack>
-    <MessageContent />
+
+    <!-- Card with message details -->
+    <Card
+      width="97%"
+      marginLeft="10px"
+      height="100%"
+      padding="$space-6"
+      when="{ selectedMessage.value.messageId }"
+    >
+      <MessageContent />
+    </Card>
+
+    <!-- Placeholder when no message is selected -->
+    <VStack height="97%" when="{ !selectedMessage.value.messageId }">
+      <Text
+        color="$textColor--disabled"
+        margin="auto"
+      >
+        Select a message to view details
+      </Text>
+    </VStack>
   </HSplitter>
 
   <!-- Mobile view -->
-  <VStack  
+  <VStack
     when="{ mediaSize.sizeIndex <= 1 }"
   >
     <MessagesList
       auth="{ auth }"
       messagesList="{ messagesList }"
     />
+    <ModalDialog when="{ selectedMessage.value.messageId }"
+      height="90%"
+      width="90%"
+       onClose="{ () => selectedMessage.update({messageId: null}) }"
+    >
+      <MessageContent />
+    </ModalDialog>
   </VStack>
 
 </Component>

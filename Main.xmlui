@@ -1,6 +1,7 @@
 <App
   xmlns:Extensions="component-ns:XMLUIExtensions"
   layout="vertical-full-header"
+  codeBehind="Main.xmlui.xs"
 >
   <Extensions:HelloAuth
     id="auth"
@@ -12,14 +13,29 @@
     storage="session"
     debug="true"
   />
+  <!-- AppState for pagination -->
+  <AppState
+    id="pagination"
+    bucket="messagePagination"
+    initialValue="{ { 
+    currentPage: 0, 
+    pageSize: 5,
+    currentPageToken: '',
+    nextPageToken: '',
+    prevPageToken: ''
+  } }"
+  />
 
   <!-- DataSource for list of messages -->
   <DataSource
     id="messagesList"
     when="{ auth.user }"
-    url="https://gmail.googleapis.com/gmail/v1/users/me/messages"
+    url="{ 
+      'https://gmail.googleapis.com/gmail/v1/users/me/messages?maxResults=' + pagination.value.pageSize + 
+      (pagination.value.currentPageToken ? '&pageToken=' + pagination.value.currentPageToken : '') 
+    }"
     headers="{ { Authorization: 'Bearer ' + auth.tokens.access_token } }"
-    resultSelector="messages"
+    transformResult="{ transformMessages }"
   />
 
   <AppHeader>
@@ -73,7 +89,7 @@
   <Text when="{ messagesList.inProgress }" margin="auto">
     ⏳ Loading...
   </Text>
-  
+
   <!-- Not authenticated -->
   <LoginCard auth="{ auth }" when="{ !auth.user }" />
 
