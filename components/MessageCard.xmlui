@@ -2,6 +2,8 @@
   name="MessageCard"
   var.subject="{ window.getHeader(msgData.value, 'Subject')  }"
   var.from="{ window.getHeader(msgData.value, 'From')  }"
+  var.fromName="{ window.extractName(window.getHeader(msgData.value, 'From', false) ) }"
+  var.fromEmail="{ window.extractEmail(window.getHeader(msgData.value, 'From', false) ) }"
   var.date="{ window.getHeader(msgData.value, 'Date')  }"
   var.snippet="{ window.decodeHtml(msgData.value.snippet) }"
 >
@@ -25,7 +27,8 @@
         selectedMessage.update({
           messageId: $props.messageId,
           subject: subject,
-          from: from,
+          fromName: fromName,
+          fromEmail: fromEmail,
           date: date,
           snippet: snippet,
           payload: msgData.value.payload,

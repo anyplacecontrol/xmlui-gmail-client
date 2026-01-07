@@ -18,17 +18,27 @@
         const doc = new DOMParser().parseFromString(String(s), "text/html");
         return doc.documentElement.textContent || "";
       };
-      // Helper functions для Gmail
-      window.getHeader = function (message, headerName) {
-        if (!message || !message.payload || !message.payload.headers) {
-          return "";
-        }
 
-        const header = message.payload.headers.find(function (h) {
-          return h.name.toLowerCase() === headerName.toLowerCase();
-        });
+      // Obtain header with optional decoding (decode default true)
+      window.getHeader = function (message, headerName, decode = true) {
+        const header = message?.payload?.headers?.find(
+          (h) => h.name.toLowerCase() === headerName.toLowerCase()
+        );
+        if (!header) return "";
+        return decode ? window.decodeHtml(header.value) : header.value;
+      };
 
-        return header ? window.decodeHtml(header.value) : "";
+      // Extracts name from "Name <email>" or returns the whole string if no email
+      window.extractName = function (str) {
+        if (!str) return "";
+        const match = str.match(/^(.+?)\s*</);
+        return match ? match[1].trim().replace(/^["']|["']$/g, "") : str;
+      };
+
+      // Extracts email from "Name <email>"
+      window.extractEmail = function (str) {
+        const match = str?.match(/<([^>]+)>/);
+        return match ? match[1] : "";
       };
 
       // Escape HTML special characters to render raw text safely

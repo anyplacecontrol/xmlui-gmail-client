@@ -6,7 +6,7 @@
         width="97%"
         marginLeft="10px"
         height="100%"
-        when="{ selectedMessage.value && selectedMessage.value.messageId }"
+        when="{ selectedMessage.value  }"
     >
         <VStack gap="$space-3" padding="$space-4" height="100%">
             <!-- Header -->
@@ -25,7 +25,8 @@
                         <strong>
                             From:
                         </strong>
-                        { " " + selectedMessage.value.from || '(Unknown Sender)' }
+                        {selectedMessage.value.fromName}
+                        {selectedMessage.value.fromEmail ? ' &lt;' + selectedMessage.value.fromEmail + '&gt;' : '' }
                     </Text>
 
                 </VStack>
@@ -34,7 +35,7 @@
             <!-- Divider -->
             <ContentSeparator
                 orientation="horizontal"
-                thickness="1px"       
+                thickness="1px"
             />
 
             <!-- Message body -->
@@ -45,36 +46,28 @@
             </VStack>
 
             <!-- Action buttons -->
-            <HStack gap="$space-2" marginTop="$space-3" horizontalAlignment="end">
+            <HStack
+                gap="$space-2"
+                marginTop="$space-3"
+                horizontalAlignment="end"
+            >
                 <Button
-                    label="Reply"                   
+                    label="Reply"
                     onClick="{ toast('Not implemented yet') }"
-                />                  
+                />
             </HStack>
         </VStack>
     </Card>
 
-    <!-- Placeholder коли нічого не обрано -->
-    <Card
-        width="97%"
-        marginLeft="10px"
-        height="100%"
-        when="{ !selectedMessage.value || !selectedMessage.value.messageId }"
-    >
-        <VStack
-            height="100%"
-            horizontalAlignment="center"
-            verticalAlignment="center"
-            padding="$space-8"
+    <!-- Placeholder when no message is selected -->
+
+    <VStack height="97%" when="{ !selectedMessage.value  }">
+        <Text
+            color="$textColor--disabled"
+            margin="auto"
         >
-            <Icon name="mail" size="48px" color="$textColor--disabled" />
-            <Text
-                variant="caption"
-                color="$textColor--disabled"
-                marginTop="$space-2"
-            >
-                Select a message to view details
-            </Text>
-        </VStack>
-    </Card>
+            Select a message to view details
+        </Text>
+    </VStack>
+
 </Component>
