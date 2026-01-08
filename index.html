@@ -7,7 +7,10 @@
     <script type="module">
       import parseGmailMessage from "https://cdn.jsdelivr.net/npm/gmail-api-parse-message@2.1.2/+esm";
       import he from "https://cdn.jsdelivr.net/npm/he@1.2.0/+esm";
-      import { parseOneAddress, parseFrom } from "https://cdn.jsdelivr.net/npm/email-addresses@5.0.0/+esm";
+      import {
+        parseOneAddress,
+        parseFrom,
+      } from "https://cdn.jsdelivr.net/npm/email-addresses@5.0.0/+esm";
       import DOMPurify from "https://cdn.jsdelivr.net/npm/dompurify@3.1.5/+esm";
 
       window.parseGmailMessage = parseGmailMessage;
@@ -30,7 +33,7 @@
         return window.innerHeight - 200;
       };
 
-      window.wrapEmailHtml = function(htmlContent) {
+      window.wrapEmailHtml = function (htmlContent) {
         return `<!DOCTYPE html>
 <html>
 <head>
@@ -51,9 +54,9 @@ window.addEventListener('load', function() {
 });
 <\/script>
 </head>
-<body>
+<${""}body>
 ${htmlContent}
-</body>
+</${""}body>
 </html>`;
       };
     </script>
