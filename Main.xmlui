@@ -7,7 +7,7 @@
       const newHeight = Number(msg.height) + 20;
       console.log('[App] Updating height to:', newHeight);
       iframeHeight.update( { height: newHeight} );
-    }k
+    }
   }}"
 >
   <HelloAuth
