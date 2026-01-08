@@ -28,7 +28,6 @@
             orientation="horizontal"
             thickness="1px"
         />
-        </VStack>
 
         <!-- Message body -->
         <IFrame
@@ -36,8 +35,6 @@
             sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox"
             height="{iframeHeight.value.height}px"
         />
-
-      
     </VStack>
 
 </Component>
