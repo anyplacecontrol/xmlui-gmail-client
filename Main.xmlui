@@ -8,7 +8,7 @@
     issuer="https://accounts.google.com"
     client_id="{window.config.__GMAIL_CLIENT_ID__}"
     client_secret="{window.config.__GMAIL_CLIENT_SECRET__}"
-    redirect_uri="http://localhost:5500"
+    redirect_uri="http://localhost:8000"
     scopes="openid email https://www.googleapis.com/auth/gmail.readonly"
     storage="session"
     debug="true"
@@ -17,8 +17,8 @@
   <AppState
     id="pagination"
     bucket="messagePagination"
-    initialValue="{ { 
-    currentPage: 0, 
+    initialValue="{ {
+    currentPage: 0,
     pageSize: 5,
     currentPageToken: '',
     nextPageToken: '',
@@ -30,9 +30,9 @@
   <DataSource
     id="messagesList"
     when="{ auth.user }"
-    url="{ 
-      'https://gmail.googleapis.com/gmail/v1/users/me/messages?maxResults=' + pagination.value.pageSize + 
-      (pagination.value.currentPageToken ? '&pageToken=' + pagination.value.currentPageToken : '') 
+    url="{
+      'https://gmail.googleapis.com/gmail/v1/users/me/messages?maxResults=' + pagination.value.pageSize +
+      (pagination.value.currentPageToken ? '&pageToken=' + pagination.value.currentPageToken : '')
     }"
     headers="{ { Authorization: 'Bearer ' + auth.tokens.access_token } }"
     transformResult="{ transformMessages }"

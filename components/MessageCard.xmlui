@@ -1,11 +1,15 @@
 <Component
   name="MessageCard"
-  var.subject="{ window.getHeader(msgData.value, 'Subject')  }"
-  var.from="{ window.getHeader(msgData.value, 'From')  }"
-  var.fromName="{ window.extractName(window.getHeader(msgData.value, 'From', false) ) }"
-  var.fromEmail="{ window.extractEmail(window.getHeader(msgData.value, 'From', false) ) }"
-  var.date="{ window.getHeader(msgData.value, 'Date')  }"
-  var.snippet="{ window.decodeHtml(msgData.value.snippet) }"
+  var.parsed="{ msgData.value ? window.parseGmailMessage(msgData.value) : {} }"
+  var.headers="{ parsed.headers || {} }"
+  var.subject="{ headers.subject || '' }"
+  var.from="{ headers.from || '' }"
+  var.fromParsed="{ window.emailAddresses.parseOneAddress(from) }"
+  var.fromName="{ fromParsed?.name || '' }"
+  var.fromEmail="{ fromParsed?.address || '' }"
+  var.date="{ headers.date || '' }"
+  var.snippet="{ window.he.decode(msgData.value?.snippet || '') }"
+  var.body="{ parsed.textHtml || parsed.textPlain || '' }"
 >
   <!-- DataSource for obtaining details of a specific message -->
   <DataSource
@@ -31,6 +35,7 @@
           fromEmail: fromEmail,
           date: date,
           snippet: snippet,
+          body: body,
           payload: msgData.value.payload,
           fullMessage: msgData.value
         })

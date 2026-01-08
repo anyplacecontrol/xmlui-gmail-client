@@ -1,53 +1,44 @@
 <Component name="MessageContent">
     <AppState id="selectedMessage" bucket="appState" />
 
-        <VStack height="100%" overflowY="auto">
-            <!-- Header -->
-            <VStack >
-                <Text variant="strong" fontSize="x-large">
-                    { selectedMessage.value.subject || '(No Subject)' }
-                </Text>
+    <VStack height="100%" overflowY="auto">
+        <!-- Header -->
+        <VStack gap="0">
+            <Text variant="strong" fontSize="x-large">
+                { selectedMessage.value.subject || '(No Subject)' }
+            </Text>
 
-                <VStack>
+            <Text fontSize="smaller" color="$textColor--disabled">
+                { formatDate(selectedMessage.value.date, "MMMM dd, yyyy 'at' HH:mm") }
+            </Text>
 
-                    <Text fontSize="smaller" color="$textColor--disabled">
-                        { formatDate(selectedMessage.value.date, "MMMM dd, yyyy 'at' HH:mm") }
-                    </Text>
-
-                    <Text overflowMode="ellipsis">
-                        <strong>
-                            From:
-                        </strong>
-                        {selectedMessage.value.fromName}
+            <Text overflowMode="ellipsis">
+                <strong>
+                    From:
+                </strong>
+                {selectedMessage.value.fromName}
                         {selectedMessage.value.fromEmail ? ' &lt;' + selectedMessage.value.fromEmail + '&gt;' : '' }
-                    </Text>
+            </Text>
 
-                </VStack>
-            </VStack>
-
-            <!-- Divider -->
-            <ContentSeparator
-                orientation="horizontal"
-                thickness="1px"
-            />
-
-            <!-- Message body -->
-            <VStack overflowY="auto">
-                <Text>
-                    { selectedMessage.value.snippet }
-                </Text>
-            </VStack>
-
-            <!-- Action buttons -->
-            <HStack               
-                horizontalAlignment="end"
-            >
-                <Button
-                    label="Reply"
-                    onClick="{ toast('Not implemented yet') }"
-                />
-            </HStack>
         </VStack>
- 
+
+        <!-- Divider -->
+        <ContentSeparator
+            orientation="horizontal"
+            thickness="1px" />
+
+        <!-- Message body -->
+        <IFrame
+            srcdoc="{ window.wrapEmailHtml(window.DOMPurify.sanitize(selectedMessage.value.body || '')) }"
+            sandbox="allow-same-origin" />
+
+        <!-- Action buttons -->
+        <HStack
+            horizontalAlignment="end">
+            <Button
+                label="Reply"
+                onClick="{ toast('Not implemented yet') }" />
+        </HStack>
+    </VStack>
 
 </Component>

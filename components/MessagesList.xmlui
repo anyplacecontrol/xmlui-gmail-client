@@ -7,30 +7,30 @@
       const currentPage = pagination.value.currentPage;
       const pageSize = pagination.value.pageSize;
       const currentPageCount = messages ? messages.length : 0;
-      
+
       if (currentPageCount === 0) {
         return '0';
       }
-      
+
       const firstMessage = currentPage * pageSize + 1;
       const lastMessage = firstMessage + currentPageCount - 1;
-      
+
       return firstMessage + '-' + lastMessage;
     }
   </script>
 
-  <VStack gap="space-4" width="100%" height="100%">    
+  <VStack gap="space-4" width="100%" height="100%">
     <H3 marginLeft="20px">
       Messages ({ getMessageRangeText() })
     </H3>
-    
+
     <Items data="{ $props.messagesList }">
       <MessageCard
         messageId="{ $item.id }"
         accessToken="{ $props.auth.tokens.access_token }"
       />
     </Items>
-  
+
     <CustomPagination when="{ $props.auth.user }" />
   </VStack>
 </Component>
