@@ -8,19 +8,46 @@
                 { selectedMessage.value.subject || '(No Subject)' }
             </Text>
 
-            <Text fontSize="smaller" color="$textColor--disabled">
-                { formatDate(selectedMessage.value.date, "MMMM dd, yyyy 'at' HH:mm") }
-            </Text>
-
-            <Text overflowMode="ellipsis">
-                <strong>
-                    From:
-                </strong>
-                {selectedMessage.value.fromName}
+            <HStack wrapContent="true" gap="10px" verticalAlignment="center">
+                <Text overflowMode="ellipsis">
+                    <strong>
+                        From:
+                    </strong>
+                    {selectedMessage.value.fromName}
                         {selectedMessage.value.fromEmail ? ' &lt;' + selectedMessage.value.fromEmail + '&gt;' : '' }
-            </Text>
+                </Text>
+                <SpaceFiller />
+                <Text fontSize="smaller" color="$textColor--disabled">
+                    { formatDate(selectedMessage.value.date, "MMMM dd, yyyy 'at' HH:mm") }
+                </Text>
+
+            </HStack>
 
         </VStack>
+
+        <!-- Divider -->
+        <ContentSeparator
+            orientation="horizontal"
+            thickness="1px"
+        />
+
+        <!-- Message body -->
+        <VStack overflowY="auto">
+            <Text>
+                { selectedMessage.value.snippet }
+            </Text>
+        </VStack>
+
+        <!-- Action buttons -->
+        <HStack
+            horizontalAlignment="end"
+        >
+            <Button
+                label="Reply"
+                onClick="{ toast('Not implemented yet') }"
+            />
+        </HStack>
+    </VStack>
 
         <!-- Divider -->
         <ContentSeparator

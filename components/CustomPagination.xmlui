@@ -7,15 +7,13 @@
       const newPage = currentState.currentPage - 1;
       
       if (newPage === 0) {
-        pagination.update({
-          ...currentState,
+        pagination.update({          
           currentPage: 0,
           currentPageToken: '',
           prevPageToken: ''
         });
       } else {
-        pagination.update({
-          ...currentState,
+        pagination.update({          
           currentPage: newPage,
           currentPageToken: currentState.prevPageToken,
           prevPageToken: ''
@@ -28,8 +26,7 @@
       
       if (!currentState.nextPageToken) return;
       
-      pagination.update({
-        ...currentState,
+      pagination.update({        
         currentPage: currentState.currentPage + 1,
         prevPageToken: currentState.currentPageToken,
         currentPageToken: currentState.nextPageToken

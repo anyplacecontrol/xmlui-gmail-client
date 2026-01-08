@@ -42,23 +42,19 @@
       }
     }"
   >
-    <VStack gap="$space-1">
+    <VStack >
       <!-- Loading state -->
       <Text when="{ msgData.loading }">
         📨 Loading...
       </Text>
 
       <!-- Message content -->
-      <VStack gap="$space-1" when="{ msgData.value }">
-        <VStack gap="$space-1" paddingRight="10px">
-          <Text variant="strong" fontSize="larger" overflowMode="ellipsis">
+      <VStack when="{ msgData.value }" gap="5px">
+        <Text variant="strong" fontSize="larger" overflowMode="ellipsis">
             { subject || '(No Subject)' }
           </Text>
-          <Text fontSize="smaller" color="$textColor--disabled">
-            { formatDate(date, "MMM dd, yyyy HH:mm") }
-          </Text>
-        </VStack>
 
+        <HStack paddingRight="10px" wrapContent="true" verticalAlignment="center" gap="5px">
         <!-- From -->
         <Text overflowMode="ellipsis">
           <strong>
@@ -66,6 +62,11 @@
           </strong>
           { " " + from || '(Unknown Sender)' }
         </Text>
+          <SpaceFiller />
+          <Text fontSize="smaller" color="$textColor--disabled">
+            { formatDate(date, "MMM dd, yyyy HH:mm") }
+          </Text>
+        </HStack>       
 
         <!-- Snippet -->
         <Text fontSize="smaller" maxLines="2">
