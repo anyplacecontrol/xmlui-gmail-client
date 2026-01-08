@@ -49,10 +49,11 @@
       auth="{ auth }"
       messagesList="{ messagesList }"
     />
-    <ModalDialog when="{ selectedMessage.value.messageId }"
+    <ModalDialog when="{ selectedMessage.value.messageId }"            
       height="90%"
+      padding="15px"
       width="90%"
-       onClose="{ () => selectedMessage.update({messageId: null}) }"
+      onClose="{ () => selectedMessage.update({messageId: null}) }"
     >
       <MessageContent />
     </ModalDialog>

@@ -2,8 +2,9 @@
     <AppState id="selectedMessage" bucket="appState" />
 
      <VStack height="100%" overflowY="auto">
+       <VStack height="12%" minHeight="90px" gap="0">
         <!-- Header -->
-        <Text variant="strong" fontSize="x-large">
+        <Text variant="strong" fontSize="x-large" overflowMode="ellipsis">
             { selectedMessage.value.subject || '(No Subject)' }
         </Text>
 
@@ -27,23 +28,17 @@
             orientation="horizontal"
             thickness="1px"
         />
+        </VStack>
 
         <!-- Message body -->
         <IFrame            
-            height="70%"
+            height="80%"
+            width="100%"
             srcdoc="{ window.wrapEmailHtml(window.DOMPurify.sanitize(selectedMessage.value.body || '')) }"
             sandbox="allow-same-origin"
         />
 
-        <!-- Action buttons -->
-        <HStack
-            horizontalAlignment="end"
-        >
-            <Button
-                label="Reply"
-                onClick="{ toast('Not implemented yet') }"
-            />
-        </HStack>
+      
     </VStack>
 
 </Component>
