@@ -29,9 +29,9 @@
   <DataSource
     id="messagesList"
     when="{ auth.user }"
-    url="{ 
-      'https://gmail.googleapis.com/gmail/v1/users/me/messages?maxResults=' + pagination.value.pageSize + 
-      (pagination.value.currentPageToken ? '&pageToken=' + pagination.value.currentPageToken : '') 
+    url="{
+      'https://gmail.googleapis.com/gmail/v1/users/me/messages?maxResults=' + pagination.value.pageSize +
+      (pagination.value.currentPageToken ? '&pageToken=' + pagination.value.currentPageToken : '')
     }"
     headers="{ { Authorization: 'Bearer ' + auth.tokens.access_token } }"
     transformResult="{ transformMessages }"

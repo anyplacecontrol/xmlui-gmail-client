@@ -3,8 +3,7 @@
 
     <VStack height="100%" overflowY="auto">
         <!-- Header -->
-        <VStack>
-
+        <VStack gap="0">
             <Text variant="strong" fontSize="x-large">
                 { selectedMessage.value.subject || '(No Subject)' }
             </Text>
@@ -47,6 +46,25 @@
                 label="Reply"
                 onClick="{ toast('Not implemented yet') }"
             />
+        </HStack>
+    </VStack>
+
+        <!-- Divider -->
+        <ContentSeparator
+            orientation="horizontal"
+            thickness="1px" />
+
+        <!-- Message body -->
+        <IFrame
+            srcdoc="{ window.wrapEmailHtml(window.DOMPurify.sanitize(selectedMessage.value.body || '')) }"
+            sandbox="allow-same-origin" />
+
+        <!-- Action buttons -->
+        <HStack
+            horizontalAlignment="end">
+            <Button
+                label="Reply"
+                onClick="{ toast('Not implemented yet') }" />
         </HStack>
     </VStack>
 

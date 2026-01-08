@@ -4,52 +4,42 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://docs.xmlui.org/resources/files/for-download/xmlui/xmlui-standalone.umd.js"></script>
+    <script type="module">
+      import parseGmailMessage from "https://cdn.jsdelivr.net/npm/gmail-api-parse-message@2.1.2/+esm";
+      import he from "https://cdn.jsdelivr.net/npm/he@1.2.0/+esm";
+      import { parseOneAddress, parseFrom } from "https://cdn.jsdelivr.net/npm/email-addresses@5.0.0/+esm";
+      import DOMPurify from "https://cdn.jsdelivr.net/npm/dompurify@3.1.5/+esm";
+
+      window.parseGmailMessage = parseGmailMessage;
+      window.he = he;
+      window.emailAddresses = { parseOneAddress, parseFrom };
+      window.DOMPurify = DOMPurify;
+
+      window.wrapEmailHtml = function(htmlContent) {
+        return `<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<style>
+body { margin: 0; padding: 16px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 14px; line-height: 1.5; word-wrap: break-word; overflow-wrap: break-word; }
+img { max-width: 100% !important; height: auto !important; }
+table { max-width: 100% !important; width: auto !important; }
+td, th { word-wrap: break-word; overflow-wrap: break-word; }
+.gmail_quote { margin: 0; padding: 0; }
+</style>
+</head>
+<body>
+${htmlContent}
+</body>
+</html>`;
+      };
+    </script>
     <script src="xmlui/xmlui-hello-auth.js"></script>
     <script>
       window.config = {};
       fetch("config.json")
         .then((r) => (r.ok ? r.json() : {}))
         .then((c) => Object.assign(window.config, c));
-    </script>
-    <script>
-      // Decode HTML entities (e.g. convert '&lt;' -> '<')
-      window.decodeHtml = function (s) {
-        if (s == null) return "";
-        const doc = new DOMParser().parseFromString(String(s), "text/html");
-        return doc.documentElement.textContent || "";
-      };
-
-      // Obtain header with optional decoding (decode default true)
-      window.getHeader = function (message, headerName, decode = true) {
-        const header = message?.payload?.headers?.find(
-          (h) => h.name.toLowerCase() === headerName.toLowerCase()
-        );
-        if (!header) return "";
-        return decode ? window.decodeHtml(header.value) : header.value;
-      };
-
-      // Extracts name from "Name <email>" or returns the whole string if no email
-      window.extractName = function (str) {
-        if (!str) return "";
-        const match = str.match(/^(.+?)\s*</);
-        return match ? match[1].trim().replace(/^["']|["']$/g, "") : str;
-      };
-
-      // Extracts email from "Name <email>"
-      window.extractEmail = function (str) {
-        const match = str?.match(/<([^>]+)>/);
-        return match ? match[1] : "";
-      };
-
-      // Escape HTML special characters to render raw text safely
-      window.escapeHtml = function (s) {
-        return String(s || "")
-          .replace(/&/g, "&amp;")
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;")
-          .replace(/"/g, "&quot;")
-          .replace(/'/g, "&#39;");
-      };
     </script>
   </head>
 
