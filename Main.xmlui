@@ -1,6 +1,6 @@
 <App
   xmlns:Extensions="component-ns:XMLUIExtensions"
-  layout="vertical-full-header"
+  layout="desktop"
   codeBehind="Main.xmlui.xs"
 >
   <Extensions:HelloAuth
@@ -8,7 +8,7 @@
     issuer="https://accounts.google.com"
     client_id="{window.config.__GMAIL_CLIENT_ID__}"
     client_secret="{window.config.__GMAIL_CLIENT_SECRET__}"
-    redirect_uri="http://localhost:5500"
+    redirect_uri="{ window.location.origin }"
     scopes="openid email https://www.googleapis.com/auth/gmail.readonly"
     storage="session"
     debug="true"
@@ -19,13 +19,12 @@
     bucket="messagePagination"
     initialValue="{ { 
     currentPage: 0, 
-    pageSize: 5,
+    pageSize: window.config.PAGE_SIZE,
     currentPageToken: '',
     nextPageToken: '',
     prevPageToken: ''
   } }"
   />
-
   <!-- DataSource for list of messages -->
   <DataSource
     id="messagesList"

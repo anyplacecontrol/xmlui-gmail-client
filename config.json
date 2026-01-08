@@ -4,6 +4,7 @@
     "lintSeverity": "warning"
   },
   "appVersion": "1.0",
+  "PAGE_SIZE": 10,
   "__GMAIL_CLIENT_ID__": "",
   "__GMAIL_CLIENT_SECRET__": ""
 }

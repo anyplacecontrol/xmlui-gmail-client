@@ -3,19 +3,10 @@
 
   <script>
     function getMessageRangeText() {
-      const messages = $props.messagesList;
-      const currentPage = pagination.value.currentPage;
-      const pageSize = pagination.value.pageSize;
-      const currentPageCount = messages ? messages.length : 0;
-      
-      if (currentPageCount === 0) {
-        return '0';
-      }
-      
-      const firstMessage = currentPage * pageSize + 1;
-      const lastMessage = firstMessage + currentPageCount - 1;
-      
-      return firstMessage + '-' + lastMessage;
+      const len = $props.messagesList?.length ?? 0;
+      if (!len) return '0';
+      const start = pagination.value.currentPage * pagination.value.pageSize + 1;
+      return `${start}-${start + len - 1}`;
     }
   </script>
 
