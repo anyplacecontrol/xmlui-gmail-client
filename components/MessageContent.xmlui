@@ -2,9 +2,9 @@
     <AppState id="selectedMessage" bucket="appState" />
     <AppState id="iframeHeight" bucket="iframe" />
 
-    <VStack height="100%">
+    <VStack height="100%" overflowY="auto" >
         <!-- Header -->
-        <Text variant="strong" fontSize="x-large" overflowMode="ellipsis">
+        <Text variant="strong" fontSize="x-large" maxLines="2">
             { selectedMessage.value.subject || '(No Subject)' }
         </Text>
 
@@ -18,7 +18,7 @@
             </Text>
             <SpaceFiller />
             <Text fontSize="smaller" color="$textColor--disabled">
-                { formatDate(selectedMessage.value.date, "MMMM dd, yyyy 'at' HH:mm") }
+                { formatDate(selectedMessage.value.date || 'Jan 01, 2000', "MMM dd, yyyy 'at' HH:mm") }
             </Text>
 
         </HStack>
@@ -30,10 +30,11 @@
         />
 
         <!-- Message body -->
-        <IFrame
-            srcdoc="{ window.wrapEmailHtml(window.sanitizeEmail(selectedMessage.value.body || '')) }"
+        <IFrame        
+            when="{selectedMessage.value.body.length}"
+            srcdoc="{ window.wrapEmailHtml(window.sanitizeEmail(selectedMessage.value.body || ''), mediaSize.sizeIndex <= 1) }"
             sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox"
-            height="{iframeHeight.value.height}px"
+            height="{iframeHeight.value.height}px"  
         />
     </VStack>
 

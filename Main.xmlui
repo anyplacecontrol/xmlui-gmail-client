@@ -2,10 +2,8 @@
   layout="desktop"
   codeBehind="Main.xmlui.xs"
   onMessageReceived="{ (msg) => {
-    console.log('[App] Message received:', msg);
     if (msg && msg.type === 'iframe-height') {
       const newHeight = Number(msg.height) + 20;
-      console.log('[App] Updating height to:', newHeight);
       iframeHeight.update( { height: newHeight} );
     }
   }}"
@@ -32,9 +30,9 @@
     prevPageToken: ''
   } }"
   />
-
   <!-- AppState for iframe height -->
   <AppState id="iframeHeight" bucket="iframe" initialValue="{ {height: 300} }" />
+  
   <!-- DataSource for list of messages -->
   <DataSource
     id="messagesList"
